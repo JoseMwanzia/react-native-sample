@@ -1,4 +1,4 @@
-![GitHub commit activity](https://img.shields.io/github/commit-activity/t/https%3A%2F%2Fgithub.com%2FJoseMwanzia/%2Freact-native-sample)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/t/JoseMwanzia/react-native-sample)
 
 
 # Welcome to your Expo app 👋
