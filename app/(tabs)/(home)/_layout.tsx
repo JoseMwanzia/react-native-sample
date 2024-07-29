@@ -11,7 +11,7 @@ export default function RootLayout() {
           fontWeight: 'bold',
         },
       }}>
-      <Stack.Screen name="index" />
+      <Stack.Screen name="index" options={{headerShown: false}} />
       <Stack.Screen name="details"/>
       <Stack.Screen name="modal" options={{
         presentation: 'modal'
