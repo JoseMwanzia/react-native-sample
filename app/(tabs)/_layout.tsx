@@ -8,10 +8,10 @@ export default function TabLayout() {
       <Tabs.Screen name="(home)" options={{ 
         title: 'Home',
         tabBarIcon: ({ color }) => <FontAwesome size={28} name="home" color={color} />,
-        }} />
+      }} />
 
 
-<Tabs.Screen name="more" options={{
+      <Tabs.Screen name="more" options={{
         title: 'More',
         tabBarIcon: ({ color }) => <Feather name="more-horizontal" size={28} color={color} />,
       }}/>

@@ -16,7 +16,7 @@ export default function DetailsScreen() {
         onPress={() => {
           router.setParams({name: 'updated'})
         }}
-      >Update the <title></title> </Text>
+      >Update the title </Text>
       
     </View>
   );
