@@ -4,8 +4,46 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Registration from './registration';
 import LoginForm from './loginForm';
 import { StatusBar } from 'expo-status-bar';
-import { NavigationContainer } from '@react-navigation/native';
-// import { Stack } from "expo-router";
+import TabLayout from './(tabs)/_layout';
+import Index from './index';
+
+
+const LoginNav = () => {
+  const Stack = createNativeStackNavigator();
+  return (
+    <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName='index'>
+      <Stack.Screen name="index" component={Index} />
+      <Stack.Screen name="loginForm" component={LoginForm} />
+      <Stack.Screen name="registration" component={Registration} />
+      <Stack.Screen name="(tabs)" component={StackNav} />
+    </Stack.Navigator>
+  );
+};
+
+
+// function DrawerNav() {
+//   const Drawer = createNativeStackNavigator();
+//   return (
+//     <Drawer.Navigator>
+//       <Drawer.Screen name="(tabs)" component={StackNav} options={{ headerShown: false }} />
+//     </Drawer.Navigator>
+//   );
+// }
+
+
+const StackNav = () => {
+  const Stack = createNativeStackNavigator();
+  return (
+    <Stack.Navigator screenOptions={{headerShown: false}}>
+      
+      <Stack.Screen
+        name="(tabs)"
+        component={TabLayout}
+      />
+    <Stack.Screen name="loginForm" component={LoginForm} />
+    </Stack.Navigator>
+  );
+};
 
 export default function RootLayout() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -13,51 +51,16 @@ export default function RootLayout() {
   useEffect(() => {
     async function getData() {
       const data = await AsyncStorage.getItem('isLoggedIn');
-      console.log( 'Login is '+ data + ' at App.js' );
-      setIsLoggedIn(data);
+      console.log(data, 'at app.js');
+      setIsLoggedIn(data === 'true');
     }
     getData();
   }, [isLoggedIn]);
 
-  const LoginNav = () => {
-    const Stack = createNativeStackNavigator();
-    return (
-      <Stack.Navigator screenOptions={{
-        headerShown: false
-      }}>
-        <Stack.Screen name="loginForm" component={LoginForm}/>
-        <Stack.Screen name="registration" component={Registration}/>
-        <Stack.Screen name="Taabs" component={DrawerNav}/>
-      </Stack.Navigator>
-    );
-  };
-
-
-  function DrawerNav() {
-    const Drawer = createNativeStackNavigator();
-    return (
-      <Drawer.Navigator
-        drawerContent={props => <DrawerContent {...props} />}
-      >
-        <Drawer.Screen name="dashbozard" component={StackNav} options={{ headerShown: true }} />
-      </Drawer.Navigator>
-    );
-  }
-
-
-  const StackNav = () => {
-    const Stack = createNativeStackNavigator();
-    return (
-      <>
-        <Stack.Screen name="(tabs)" options={{ headerShown: true, title: 'Tabz' }}/>
-        <Stack.Screen name="details" />
-      </>
-    );
-  };
 
   return (
     <>
-      {isLoggedIn ? <DrawerNav/> : <LoginNav/>}
+      {!isLoggedIn ? <LoginNav/> : <StackNav/>}
       <StatusBar style="dark" />
     </>
   );
