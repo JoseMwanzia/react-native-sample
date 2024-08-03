@@ -6,7 +6,6 @@ import { useNavigation } from '@react-navigation/native';
 
 const logo = require("../assets/shamirilogo.png")
 
-
 export default function LoginForm() {
     const navigation = useNavigation()
     const [click, setClick] = useState(false);
@@ -49,20 +48,19 @@ export default function LoginForm() {
 
     async function getData() {
         const data = await AsyncStorage.getItem('isLoggedIn')
-        console.log(data, 'at App.js');
+        // console.log(data, 'at App.js');
     }
 
 
     useEffect(() => {
         getData();
-        console.log("In Login Page");
+        // console.log("In Login Page");
     }, [])
 
     return (
         <>
             <ScrollView keyboardShouldPersistTaps={'always'} contentContainerStyle={styles.container}>
-
-                <Image source={logo} style={styles.image} resizeMode='contain' />
+                <Image source={logo} style={styles.image} />
                 <View style={styles.inputView}>
                     <TextInput style={styles.input} placeholder='EMAIL' value={data.email} onChangeText={(text) => handleInputChange(text, 'email')} autoCorrect={false}
                         autoCapitalize='none' />
@@ -91,22 +89,13 @@ export default function LoginForm() {
                 {/* <Image source={linkedin} style={styles.icons} /> */}
 
                 <View style={styles.mediaIcons}>
-                    <Pressable onPress={() => { Linking.openURL('https://www.instagram.com/shamiriinstitute?igsh=MWJ4cHJxZXRpeW5pYQ=='); }}>
-                        <FontAwesome6 name="instagram" size={40} color="black" />
-                    </Pressable>
-                    <Pressable onPress={() => { Linking.openURL('https://www.twitter.com/shamiriteam'); }}>
-                        <FontAwesome6 name="x-twitter" size={40} color="black" />
-                    </Pressable>
-                    <Pressable onPress={() => { Linking.openURL('https://www.linkedin.com/company/shamiri-institute/') }}>
-                        <FontAwesome6 name="linkedin" size={40} color="black" />
-                    </Pressable>
-                    <Pressable onPress={() => { Linking.openURL('https://www.youtube.com/@shamiriinstitute'); }}>
-                        <FontAwesome6 name="youtube" size={40} color="black" />
-                    </Pressable>
+                    <FontAwesome6 name="instagram" size={40} color="black" onPress={() => { Linking.openURL('https://www.instagram.com/'); }} />
+                    <FontAwesome6 name="x-twitter" size={40} color="black" onPress={() => { Linking.openURL('https://www.twitter.com/'); }} />
+                    <FontAwesome6 name="linkedin" size={40} color="black" onPress={() => { Linking.openURL('https://www.linkedin.com') }} />
+                    <FontAwesome6 name="youtube" size={40} color="black" onPress={() => { Linking.openURL('https://www.youtube.com/'); }}/>
                 </View>
 
                 <Text style={styles.footerText}>Don't Have Account?<Pressable onPress={() => navigation.navigate('registration')}><Text style={styles.signup} >  Sign Up</Text></Pressable></Text>
-
 
             </ScrollView>
         </>
@@ -115,13 +104,20 @@ export default function LoginForm() {
 
 
 const styles = StyleSheet.create({
+    imageBackground :{
+        flex: 1,
+        justifyContent: 'center',
+        // objectFit: 'cover',
+
+    },
     container: {
         alignItems: "center",
         paddingTop: 70,
     },
     image: {
         height: 180,
-        width: 200
+        width: 200,
+        objectFit: 'contain',
     },
     title: {
         fontSize: 30,
