@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native'
 import React, { useState } from 'react'
-import { Alert, Image, Pressable, SafeAreaView, StyleSheet, Switch, Text, TextInput, View, Linking, TouchableOpacity } from 'react-native'
+import { Image, Pressable, SafeAreaView, StyleSheet, Text, TextInput, View } from 'react-native'
 const logo = require("../assets/shamirilogo.png")
 
 
@@ -8,15 +8,15 @@ export default function Register() {
     const navigation = useNavigation()
     const [error, setError] = useState()
     const [data, setData] = useState({
-       name:'', email: '', password: ''
+        username:'', email: '', password: ''
     });
 
-    const handleInputChange = (value, name) => {
+    const handleInputChange = (value: string, name: string) => {
         setData({ ...data, [name]: value });
     };
 
     async function handleSubmit() {
-        const response = await fetch('http://192.168.100.166:3000/register', {
+        const response = await fetch('http://localhost:3000/register', {
             method: "POST",
             headers: {
                 Accept: "application/json",
@@ -26,12 +26,11 @@ export default function Register() {
         })
         const result = await response.json();
 
-
-        if (result.ok) {
+        if (response.ok) {
             navigation.navigate('loginForm');
-            Alert.alert('You have successfully signed up!')
+            setData({username:'', email: '', password: ''})
         } else {
-            setError(result.message)
+            setError(result.errors.map((err: { path: string }) => err.path))
         }
     }
 
@@ -41,7 +40,7 @@ export default function Register() {
             <Image source={logo} style={styles.image} resizeMode='contain' />
             <Text style={styles.title}>Register</Text>
             <View style={styles.inputView}>
-                <TextInput style={styles.input} placeholder='YOUR NAME' value={data.name} onChangeText={(text) => handleInputChange(text, 'name')} autoCorrect={false}
+                <TextInput style={styles.input} placeholder='YOUR NAME' value={data.username} onChangeText={(text) => handleInputChange(text, 'username')} autoCorrect={false}
                     autoCapitalize='none' />
                 <TextInput style={styles.input} placeholder='EMAIL' value={data.email} onChangeText={(text) => handleInputChange(text, 'email')} autoCorrect={false}
                     autoCapitalize='none' />
