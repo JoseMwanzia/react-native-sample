@@ -6,7 +6,7 @@ const logo = require("../assets/shamirilogo.png")
 
 export default function Register() {
     const navigation = useNavigation()
-    const [error, setError] = useState()
+    const [error, setError] = useState([])
     const [data, setData] = useState({
         username:'', email: '', password: ''
     });
@@ -42,10 +42,13 @@ export default function Register() {
             <View style={styles.inputView}>
                 <TextInput style={styles.input} placeholder='YOUR NAME' value={data.username} onChangeText={(text) => handleInputChange(text, 'username')} autoCorrect={false}
                     autoCapitalize='none' />
+                    {error[0] && <Text style={{color: 'red', padding: 5}}>{error[0]} should not be empty</Text>}
                 <TextInput style={styles.input} placeholder='EMAIL' value={data.email} onChangeText={(text) => handleInputChange(text, 'email')} autoCorrect={false}
                     autoCapitalize='none' />
+                    {error[1] && <Text style={{color: 'red', padding: 5}}>{error[1]} should not be empty</Text>}
                 <TextInput style={styles.input} placeholder='PASSWORD' secureTextEntry value={data.password} onChangeText={(text) => handleInputChange(text, 'password')} autoCorrect={false}
                     autoCapitalize='none' />
+                    {error[2] && <Text style={{color: 'red', padding: 5}}>{error[2]} should not be empty</Text>}
             </View>
 
             <View style={styles.buttonView}>
