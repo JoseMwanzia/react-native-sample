@@ -37,7 +37,7 @@ export default function Register() {
     return (
         <SafeAreaView style={styles.container}>
 
-            <Image source={logo} style={styles.image} resizeMode='contain' />
+            <Image source={logo} style={styles.image} />
             <Text style={styles.title}>Register</Text>
             <View style={styles.inputView}>
                 <TextInput style={styles.input} placeholder='YOUR NAME' value={data.username} onChangeText={(text) => handleInputChange(text, 'username')} autoCorrect={false}
@@ -52,13 +52,12 @@ export default function Register() {
             </View>
 
             <View style={styles.buttonView}>
-                    {error && <Text style={{color: 'red', padding: 5}}>{error}</Text>}
                 <Pressable style={styles.button} onPress={handleSubmit}>
                     <Text style={styles.buttonText}>Register</Text>
                 </Pressable>
             </View>
 
-            <Text style={styles.footerText}>Already have an account?<TouchableOpacity onPress={() => navigation.navigate('loginForm')}><Text style={styles.signup} >  login</Text></TouchableOpacity></Text>
+            <Text style={styles.footerText}>Already have an account?<Pressable onPress={() => navigation.navigate('loginForm')}><Text style={styles.signup} >  login</Text></Pressable></Text>
 
 
         </SafeAreaView>
@@ -73,7 +72,8 @@ const styles = StyleSheet.create({
     },
     image: {
         height: 180,
-        width: 200
+        width: 200,
+        objectFit: 'contain',
     },
     title: {
         fontSize: 30,
