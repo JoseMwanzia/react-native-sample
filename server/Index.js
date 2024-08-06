@@ -18,9 +18,16 @@ app.use(cors(corsOptions))
 
 app.post('/register', [
     [
-        body("username").notEmpty(),
-        body("email").isEmail(),
-        body("password").notEmpty(),
+        body("username")
+            .notEmpty().withMessage('Username must be provided')
+            .isLength({ min: 2}).withMessage('Username must be at least 2 characters long'),
+        body("email")
+            .notEmpty().withMessage('Email must not be blank')
+            .isEmail().withMessage('Email must be valid'),
+        body("password")
+            .notEmpty().withMessage('Password must be provided')
+            .isLength({ max: 16 }).withMessage('Password should be at most 16 characters long')
+            .isLength({ min: 8 }).withMessage('Password should be at least 8 characters long'),
     ],
 ], async (req, res) => {
     const { username, password, email } = req.body;
