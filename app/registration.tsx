@@ -30,7 +30,15 @@ export default function Register() {
             navigation.navigate('loginForm');
             setData({username:'', email: '', password: ''})
         } else {
-            setError(result.errors.map((err: { path: string }) => err.path))
+            const errorData: string[] = []
+            
+            result.errors.forEach((err: { path: string | number ; message: string }) => {
+                errorData[err.path] = err.message;
+                console.log(err.path);
+                
+            });
+            setError(errorData);
+
         }
     }
 
@@ -42,13 +50,13 @@ export default function Register() {
             <View style={styles.inputView}>
                 <TextInput style={styles.input} placeholder='YOUR NAME' value={data.username} onChangeText={(text) => handleInputChange(text, 'username')} autoCorrect={false}
                     autoCapitalize='none' />
-                    {error[0] && <Text style={{color: 'red', padding: 5}}>{error[0]} should not be empty</Text>}
+                    {error.username && <Text style={{color: 'red', padding: 5}}>{error.username}</Text>}
                 <TextInput style={styles.input} placeholder='EMAIL' value={data.email} onChangeText={(text) => handleInputChange(text, 'email')} autoCorrect={false}
                     autoCapitalize='none' />
-                    {error[1] && <Text style={{color: 'red', padding: 5}}>{error[1]} should not be empty</Text>}
+                    {error.email && <Text style={{color: 'red', padding: 5}}>{error.email}</Text>}
                 <TextInput style={styles.input} placeholder='PASSWORD' secureTextEntry value={data.password} onChangeText={(text) => handleInputChange(text, 'password')} autoCorrect={false}
                     autoCapitalize='none' />
-                    {error[2] && <Text style={{color: 'red', padding: 5}}>{error[2]} should not be empty</Text>}
+                    {error.password && <Text style={{color: 'red', padding: 5}}>{error.password}</Text>}
             </View>
 
             <View style={styles.buttonView}>
