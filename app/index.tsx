@@ -10,6 +10,10 @@ import {
   Pressable,
 } from 'react-native';
 
+type NavigationRoute = {
+  loginForm: string
+}
+
 export default function Index() {
   const navigation = useNavigation()
   return (
