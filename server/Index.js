@@ -66,6 +66,50 @@ app.post('/register', [
 
 });
 
+
+app.post('/login', [
+    body('email').notEmpty().withMessage('Please provide an email'),
+    body('password').notEmpty().withMessage('Password is required')
+  ], async (req, res, next) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+        const errorMessage = errors.array().map((error) => ({
+            path: error.path,
+            message: error.msg
+        }))
+        return res.status(400).json({ error: errorMessage});
+    }
+
+    const { email, password } = req.body
+
+    
+    try {
+        const result = await pool.query('SELECT username, email, password FROM users WHERE email = ($1)', [email])
+
+        // if (result.rows.length === 0 ) {
+        //     return res.status(404).json({ error: 'Invalid email'})
+        // }
+
+        const user = result.rows[0]
+        const validPassword = await bcrypt.compare(password, user.password)
+
+        if (validPassword) {
+            const { password, ...removePassword} = user;
+            return res.status(200).json({user: removePassword})
+        
+        } else {
+            return res.status(401).json({ error: "Try password again!"})
+        }
+
+    } catch (error) {
+        next(error);
+        // res.status(500).json({ error: 'Internal server error!' })
+    }
+
+    
+})
+
 app.listen(port, (error) => {
     if (error) {
         console.log(error)
