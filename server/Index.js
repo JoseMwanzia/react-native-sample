@@ -6,6 +6,7 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken');
 const port = 3000;
 const cors = require('cors')
+const { logError, isOperationalError} = require('./handleErrors/errorHandlers.js')
 
 app.use(express.json())
 
@@ -109,6 +110,14 @@ app.post('/login', [
 
     
 })
+process.on('uncaughtException', error => {
+    logError(error)
+
+    if (!isOperationalError(error)) {
+        process.exit(1)
+    }
+})
+
 
 app.listen(port, (error) => {
     if (error) {
