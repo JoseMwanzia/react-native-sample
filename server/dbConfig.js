@@ -1,12 +1,19 @@
 require('dotenv').config();
 const { Pool } = require('pg');
 
+if (process.env.DB_HOST) {
+    console.log(`Configuration is okay!`)
+} else {
+    console.log(`Configuration is NOT okay!`)
+}
+
+
 const pool = new Pool({
-    user: '',
-    database: 'native_app',
-    password: '',
-    host: 'localhost',
-    port: 5432,
+    user: process.env.DB_USER,
+    database: process.env.DB_NAME,
+    password: process.env.DB_PASSWORD,
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT
 })
 
 module.exports = pool;
