@@ -110,6 +110,12 @@ app.post('/login', [
 
     
 })
+
+
+process.on('unhandledRejection', error => {
+    throw error
+})
+
 process.on('uncaughtException', error => {
     logError(error)
 
