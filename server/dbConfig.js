@@ -1,6 +1,15 @@
 require('dotenv').config();
 const { Pool } = require('pg');
 
+// const requiredVarables = ['DB_HOST', 'DB_USER', 'DB_NAME', 'DB_PASSWORD', 'DB_PORT']
+
+// for (const variable of requiredVarables) {
+//     if (!process.env[variable]) {
+//         console.log(`${variable} is missing. Application cannot start`);
+//         process.exit(1);
+//     }
+// }
+
 if (process.env.DB_HOST) {
     console.log(`Configuration is okay!`)
 } else {
